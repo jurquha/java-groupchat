@@ -12,3 +12,18 @@ overdone maybe. Also - we could do a different kind of application that could mo
 applications (autonomous cars) that ad hoc networks have. 
 
 Architecture:
+
+fxml:
+defines ui for application
+
+controller:
+defines functions called in fxml
+
+server class:
+class to set up listening for messages
+
+client class:
+class to set up sending of messages
+
+main:
+initialize server and client to send/recieve messages, loop
