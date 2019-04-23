@@ -1,9 +1,9 @@
 <?import javafx.geometry.Insets?>
-        <?import javafx.scene.layout.*?>
-        <?import javafx.scene.control.*?>
-        <?import javafx.scene.text.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.text.*?>
 
-<GridPane fx:controller="edu.adhoc.app.Controller" xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="10" vgap="10">
+<GridPane fx:controller="edu.adhoc.app.Controller" xmlns:fx="http://javafx.com/fxml" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="500" minWidth="500" prefWidth="700" prefHeight="700" alignment="center" hgap="10" vgap="10">
     <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -17,7 +17,7 @@
         <VBox fx:id="messageBox" maxHeight="200" maxWidth="200"/>
     </ScrollPane>
     <ScrollPane GridPane.columnIndex="0" GridPane.rowIndex="0">
-        <VBox fx:id="userList" maxHeight="200" maxWidth="200"/>
+        <VBox fx:id="userListVBox" maxHeight="200" maxWidth="200"/>
     </ScrollPane>
     <Label  text="Enter Message:"
             GridPane.columnIndex="0" GridPane.rowIndex="1"/>
