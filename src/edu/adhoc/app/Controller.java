@@ -13,6 +13,6 @@ public class Controller {
 
     @FXML
     protected void handleOnActionEnterField(ActionEvent event) {
-        messageBox.getChildren().add(new Text("won't scroll"));
+        messageBox.getChildren().add(new Text("won't scroll at all but maybe this way it will"));
     }
 }
