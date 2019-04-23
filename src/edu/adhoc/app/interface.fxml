@@ -10,13 +10,14 @@
         GridPane.columnIndex="1" GridPane.rowIndex="0"/>
     <ScrollPane
         GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-    <TextArea
+    <VBox fx:id="messageBox"
         GridPane.columnIndex="1" GridPane.rowIndex="0"/>
-    <TextArea
+    <VBox fx:id="userList"
         GridPane.columnIndex="0" GridPane.rowIndex="0"/>
     <Label
         GridPane.columnIndex="0" GridPane.rowIndex="1"
         text="Enter Message:"/>
-    <TextField
+    <TextField fx:id="enterTextField"
+        onAction="#handleOnActionEnterField"
         GridPane.columnIndex="1" GridPane.rowIndex="1"/>
 </GridPane>

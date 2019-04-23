@@ -3,8 +3,6 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.text.*?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
 <GridPane fx:controller="edu.adhoc.app.Controller"
           xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="10" vgap="10">
 <padding><Insets top="25" right="25" bottom="10" left="25"/></padding>
@@ -12,13 +10,14 @@
         GridPane.columnIndex="1" GridPane.rowIndex="0"/>
     <ScrollPane
         GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-    <TextArea
+    <VBox fx:id="messageBox"
         GridPane.columnIndex="1" GridPane.rowIndex="0"/>
-    <TextArea
+    <VBox fx:id="userList"
         GridPane.columnIndex="0" GridPane.rowIndex="0"/>
     <Label
         GridPane.columnIndex="0" GridPane.rowIndex="1"
         text="Enter Message:"/>
-    <TextField
+    <TextField fx:id="enterTextField"
+        onAction="#handleOnActionEnterField"
         GridPane.columnIndex="1" GridPane.rowIndex="1"/>
 </GridPane>
