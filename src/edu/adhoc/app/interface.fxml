@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.text.*?>
 
-<GridPane fx:controller="edu.adhoc.app.Controller" xmlns:fx="http://javafx.com/fxml" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="500" minWidth="500" prefWidth="700" prefHeight="700" alignment="center" hgap="10" vgap="10">
+<GridPane fx:controller="edu.adhoc.app.ChatRoomController" xmlns:fx="http://javafx.com/fxml" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="500" minWidth="500" prefWidth="700" prefHeight="700" alignment="center" hgap="10" vgap="10">
     <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
