@@ -27,6 +27,7 @@ public class LoginController {
 //        secondStage.setScene(new Scene(root));
 //        secondStage.show();
 
+
         Node source = (Node) event.getSource();
         Stage stage = (Stage) source.getScene().getWindow();
         stage.close();

@@ -9,6 +9,9 @@ import javafx.stage.Stage;
 public class Main extends Application {
 
     static ChatRoomController chatRoomController;
+    public String displayName;
+    public String multicastIP;
+    public int portNumber;
 
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -32,6 +35,30 @@ public class Main extends Application {
          * Also: have two separate controllers. One chatRoomController shared by all seems like bad practice
          */
 
+    }
+
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public String getMulticastIP() {
+        return multicastIP;
+    }
+
+    public int getPortNumber() {
+        return portNumber;
+    }
+
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
+    }
+
+    public void setMulticastIP(String multicastIP) {
+        this.multicastIP = multicastIP;
+    }
+
+    public void setPortNumber(int portNumber) {
+        this.portNumber = portNumber;
     }
 
 
