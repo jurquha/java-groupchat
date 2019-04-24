@@ -19,17 +19,28 @@ public class LoginController {
     @FXML private TextField portNumberTextField;
     @FXML private Button connectButton;
 
+
+
     @FXML
     protected void handleConnectButtonOnAction(ActionEvent event) throws Exception {
-//        Parent root = FXMLLoader.load(getClass().getResource("interface.fxml"));
-//        Stage secondStage = new Stage();
-//        secondStage.setTitle("Wireless Ad Hoc Chat Room");
-//        secondStage.setScene(new Scene(root));
-//        secondStage.show();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("interface.fxml"));
+        Parent root = loader.load();
+        ChatRoomController chatRoomController = loader.getController();
+        chatRoomController.setDisplayName(userNameTextField.getText());
+        chatRoomController.setMulticastIP(ipAddressTextField.getText());
+        chatRoomController.setPortNumber(portNumberTextField.getText());
 
+        Stage secondStage = new Stage();
+        secondStage.setTitle("Wireless Ad Hoc Chat Room");
+        secondStage.setScene(new Scene(root));
+        secondStage.show();
+
+        chatRoomController.connect();
 
         Node source = (Node) event.getSource();
         Stage stage = (Stage) source.getScene().getWindow();
         stage.close();
     }
+
+
 }

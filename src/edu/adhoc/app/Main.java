@@ -9,22 +9,19 @@ import javafx.stage.Stage;
 public class Main extends Application {
 
     static ChatRoomController chatRoomController;
-    private String displayName;
-    private String multicastIP; //TODO chang this to InetAddress object later, this string is purely for testing UI
-    private int portNumber;
 
     @Override
     public void start(Stage primaryStage) throws Exception{
 
-        Parent root = FXMLLoader.load(getClass().getResource("interface.fxml"));
-        Parent login = FXMLLoader.load(getClass().getResource("login.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("login.fxml"));
+        //Parent login = FXMLLoader.load(getClass().getResource("login.fxml"));
 
-        Stage loginStage = new Stage();
-        loginStage.setTitle("Connect to Chatroom");
-        loginStage.setScene(new Scene(login));
-        loginStage.show();
+//        Stage loginStage = new Stage();
+//        loginStage.setTitle("Connect to Chatroom");
+//        loginStage.setScene(new Scene(login));
+//        loginStage.show();
 
-        primaryStage.setTitle("Wireless Ad Hoc Chat Room");
+        primaryStage.setTitle("Wireless Ad Hoc Chat Room Login");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
 
@@ -36,31 +33,6 @@ public class Main extends Application {
          */
 
     }
-
-    public String getDisplayName() {
-        return displayName;
-    }
-
-    public String getMulticastIP() {
-        return multicastIP;
-    }
-
-    public int getPortNumber() {
-        return portNumber;
-    }
-
-    public void setDisplayName(String displayName) {
-        this.displayName = displayName;
-    }
-
-    public void setMulticastIP(String multicastIP) {
-        this.multicastIP = multicastIP;
-    }
-
-    public void setPortNumber(int portNumber) {
-        this.portNumber = portNumber;
-    }
-
 
     public static void main(String[] args) {
         launch(args);

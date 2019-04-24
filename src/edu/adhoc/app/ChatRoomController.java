@@ -17,11 +17,48 @@ public class ChatRoomController {
     @FXML private VBox userListVBox;
     @FXML private TextField enterTextField;
     @FXML private ScrollPane messageBoxScrollPane;
+    private String displayName;
+    private String multicastIP; //TODO chang this to InetAddress object later, this string is purely for testing UI
+    private String portNumber;
 
     @FXML
     protected void handleOnActionEnterField(ActionEvent event) {
         messageBox.getChildren().add(new Text(enterTextField.getText()));
         messageBoxScrollPane.vvalueProperty().bind(messageBox.heightProperty());
+    }
+
+    protected void connect() {
+        messageBox.getChildren().add(new Text(displayName));
+        messageBox.getChildren().add(new Text(multicastIP));
+        messageBox.getChildren().add(new Text(portNumber));
+    }
+
+    protected Text createMessage(){
+        return new Text("sample return to make intellij happy");
+    }
+
+    protected String getDisplayName() {
+        return displayName;
+    }
+
+    protected String getMulticastIP() {
+        return multicastIP;
+    }
+
+    protected String getPortNumber() {
+        return portNumber;
+    }
+
+    protected void setDisplayName(String displayName) {
+        this.displayName = displayName;
+    }
+
+    protected void setMulticastIP(String multicastIP) {
+        this.multicastIP = multicastIP;
+    }
+
+    protected void setPortNumber(String portNumber) {
+        this.portNumber = portNumber;
     }
 
 //    @FXML
