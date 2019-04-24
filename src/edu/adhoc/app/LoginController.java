@@ -22,10 +22,9 @@ public class LoginController {
     @FXML private Button connectButton;
 
 
-
     @FXML
     protected void handleConnectButtonOnAction(ActionEvent event) throws Exception {
-        
+
         if (userNameTextField.getText().isEmpty() || ipAddressTextField.getText().isEmpty() || portNumberTextField.getText().isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.ERROR, "No fields can be left empty.", ButtonType.CLOSE);
             alert.showAndWait();
