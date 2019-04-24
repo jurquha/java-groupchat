@@ -6,19 +6,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.net.InetAddress;
-import java.net.MulticastSocket;
-import java.net.SocketException;
-import java.net.UnknownHostException;
+import java.net.*;
 
 public class ChatRoomController {
     @FXML private VBox messageBox;
@@ -48,7 +42,7 @@ public class ChatRoomController {
         messageBox.getChildren().add(new Text(portNumber));
     }
 
-    public static void joinChat(String displayName, String multicastHost, int portNumber) {
+    public void joinChat(String displayName, String multicastHost, int portNumber) {
         /**
          * should this method be in here or in main?
          *if it is in here it can easily access UI events
@@ -66,7 +60,20 @@ public class ChatRoomController {
             thread.start();
 
             while (true) {
-                String message;
+                enterTextField.setOnAction(e -> {
+                    try {
+                        String message = getDisplayName() + ":" + enterTextField.getText();
+                        byte[] buffer = message.getBytes();
+                        DatagramPacket datagram = new DatagramPacket(buffer, buffer.length, room, portNumber);
+                        socket.send(datagram);
+                    } catch (IOException ex) {
+                        Alert alert = new Alert(Alert.AlertType.ERROR, "Socket error.", ButtonType.CLOSE);
+                        alert.showAndWait();
+                        //ex.printStackTrace();
+                    }
+
+                });
+
 
             }
 
