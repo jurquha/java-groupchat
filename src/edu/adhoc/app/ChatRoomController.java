@@ -14,6 +14,12 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+import java.net.InetAddress;
+import java.net.MulticastSocket;
+import java.net.SocketException;
+import java.net.UnknownHostException;
+
 public class ChatRoomController {
     @FXML private VBox messageBox;
     @FXML private VBox userListVBox;
@@ -40,6 +46,34 @@ public class ChatRoomController {
         messageBox.getChildren().add(new Text(displayName));
         messageBox.getChildren().add(new Text(multicastIP));
         messageBox.getChildren().add(new Text(portNumber));
+    }
+
+    public static void joinChat(String displayName, String multicastHost, int portNumber) {
+        /**
+         * should this method be in here or in main?
+         *if it is in here it can easily access UI events
+         * if it is in main getting notified on action events could prove to be tricky, but would likely be better
+         */
+
+        try {
+            InetAddress room = InetAddress.getByName(multicastHost);
+            MulticastSocket socket = new MulticastSocket(portNumber);
+
+            socket.setTimeToLive(0);
+
+            socket.joinGroup(room);
+            Thread thread = new Thread(new ReadThread(socket, room, portNumber, displayName));
+            thread.start();
+
+            while (true) {
+                String message;
+
+            }
+
+        } catch (SocketException ex) {
+        } catch (UnknownHostException ex) {
+        } catch (IOException ex) {
+        }
     }
 
     protected Text createMessage(){

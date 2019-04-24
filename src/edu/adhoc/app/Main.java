@@ -28,31 +28,7 @@ public class Main extends Application {
         primaryStage.setTitle("Wireless Ad Hoc Chat Room Login");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
-
-        /**
-         * New idea for later: initialize and show both windows here, then later close the connection
-         * window and pass the info to the other window, instead of opening one then closing it and opening the other
-         *
-         * Also: have two separate controllers. One chatRoomController shared by all seems like bad practice
-         */
-
     }
-
-    public static void joinChat(String displayName, String multicastHost, int portNumber) {
-        try {
-            InetAddress room = InetAddress.getByName(multicastHost);
-            MulticastSocket socket = new MulticastSocket(portNumber);
-
-            socket.setTimeToLive(0);
-
-            socket.joinGroup(room);
-
-        } catch (SocketException ex) {
-        } catch (UnknownHostException ex) {
-        } catch (IOException ex) {
-        }
-    }
-
 
     public static void main(String[] args) {
         launch(args);
