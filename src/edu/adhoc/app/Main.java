@@ -9,9 +9,9 @@ import javafx.stage.Stage;
 public class Main extends Application {
 
     static ChatRoomController chatRoomController;
-    public String displayName;
-    public String multicastIP;
-    public int portNumber;
+    private String displayName;
+    private String multicastIP; //TODO chang this to InetAddress object later, this string is purely for testing UI
+    private int portNumber;
 
     @Override
     public void start(Stage primaryStage) throws Exception{
