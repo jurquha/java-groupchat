@@ -1,10 +1,14 @@
 package edu.adhoc.app;
 
+import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+
+import java.io.IOException;
+import java.net.*;
 
 public class Main extends Application {
 
@@ -33,6 +37,22 @@ public class Main extends Application {
          */
 
     }
+
+    public static void joinChat(String displayName, String multicastHost, int portNumber) {
+        try {
+            InetAddress room = InetAddress.getByName(multicastHost);
+            MulticastSocket socket = new MulticastSocket(portNumber);
+
+            socket.setTimeToLive(0);
+
+            socket.joinGroup(room);
+
+        } catch (SocketException ex) {
+        } catch (UnknownHostException ex) {
+        } catch (IOException ex) {
+        }
+    }
+
 
     public static void main(String[] args) {
         launch(args);

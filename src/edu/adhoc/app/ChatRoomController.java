@@ -6,7 +6,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -17,6 +19,8 @@ public class ChatRoomController {
     @FXML private VBox userListVBox;
     @FXML private TextField enterTextField;
     @FXML private ScrollPane messageBoxScrollPane;
+    @FXML private Button submitMessageButton;
+    @FXML private TextArea enterTextArea;
     private String displayName;
     private String multicastIP; //TODO chang this to InetAddress object later, this string is purely for testing UI
     private String portNumber;
@@ -25,6 +29,11 @@ public class ChatRoomController {
     protected void handleOnActionEnterField(ActionEvent event) {
         messageBox.getChildren().add(new Text(enterTextField.getText()));
         messageBoxScrollPane.vvalueProperty().bind(messageBox.heightProperty());
+    }
+
+    @FXML
+    protected void handleSubmitMessageButton(ActionEvent event) {
+        messageBox.getChildren().add(new Text(enterTextArea.getText()));
     }
 
     protected void connect() {

@@ -4,11 +4,12 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
-
+<?import javafx.scene.control.Button?>
 <GridPane alignment="center" hgap="10" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="500" minWidth="500" prefHeight="533.0" prefWidth="700" vgap="10" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.adhoc.app.ChatRoomController">
     <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" maxWidth="315.0" minWidth="10.0" prefWidth="148.0" />
@@ -27,4 +28,6 @@
     </ScrollPane>
     <Label text="Enter Message:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
     <TextField fx:id="enterTextField" onAction="#handleOnActionEnterField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+    <TextArea fx:id="enterTextArea" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+    <Button fx:id="submitMessageButton" onAction="#handleSubmitMessageButton" text="Submit" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
 </GridPane>
