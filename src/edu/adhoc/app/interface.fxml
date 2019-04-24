@@ -1,27 +1,30 @@
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.text.*?>
+<?xml version="1.0" encoding="UTF-8"?>
 
-<GridPane fx:controller="edu.adhoc.app.ChatRoomController" xmlns:fx="http://javafx.com/fxml" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="500" minWidth="500" prefWidth="700" prefHeight="700" alignment="center" hgap="10" vgap="10">
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<GridPane alignment="center" hgap="10" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="500" minWidth="500" prefHeight="700" prefWidth="700" vgap="10" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.121" fx:controller="edu.adhoc.app.ChatRoomController">
     <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
     </columnConstraints>
     <rowConstraints>
-        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
     </rowConstraints>
-    <padding><Insets top="25" right="25" bottom="10" left="25"/></padding>
-    <ScrollPane GridPane.columnIndex="1" GridPane.rowIndex="0">
-        <VBox fx:id="messageBox" maxHeight="200" maxWidth="200"/>
+    <padding><Insets bottom="10" left="25" right="25" top="25" /></padding>
+    <ScrollPane fx:id="messageBoxScrollPane" GridPane.columnIndex="1" GridPane.rowIndex="0">
+        <VBox fx:id="messageBox" maxHeight="200" maxWidth="200" />
     </ScrollPane>
     <ScrollPane GridPane.columnIndex="0" GridPane.rowIndex="0">
-        <VBox fx:id="userListVBox" maxHeight="200" maxWidth="200"/>
+        <VBox fx:id="userListVBox" maxHeight="200" maxWidth="200" />
     </ScrollPane>
-    <Label  text="Enter Message:"
-            GridPane.columnIndex="0" GridPane.rowIndex="1"/>
-    <TextField  fx:id="enterTextField"
-                onAction="#handleOnActionEnterField"
-                GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+    <Label text="Enter Message:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+    <TextField fx:id="enterTextField" onAction="#handleOnActionEnterField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 </GridPane>
