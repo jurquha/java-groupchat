@@ -1,5 +1,6 @@
 package edu.adhoc.app;
 
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 
@@ -37,7 +38,9 @@ public class ReadThread implements Runnable {
                 message = new String(buffer,0,datagram.getLength(),"UTF-8");
                 if(!message.startsWith(displayName)){
                     System.out.println(message);
-                    //Main.chatRoomController.enterMessage(message);
+                    Platform.runLater( () -> {
+                        Main.chatRoomController.enterMessage(message);
+                    });
                     //figure out how to push this message to the vbox
                 }
             } catch(IOException e) {

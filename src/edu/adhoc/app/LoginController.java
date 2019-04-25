@@ -30,23 +30,23 @@ public class LoginController {
             alert.showAndWait();
             return;
         }
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("interface.fxml"));
-        Parent root = loader.load();
-        ChatRoomController chatRoomController = loader.getController();
-        chatRoomController.setDisplayName(userNameTextField.getText());
-        chatRoomController.setMulticastIP(ipAddressTextField.getText());
-        chatRoomController.setPortNumber(Integer.parseInt(portNumberTextField.getText()));
+//        FXMLLoader loader = new FXMLLoader(getClass().getResource("interface.fxml"));
+//        Parent root = loader.load();
+//        ChatRoomController chatRoomController = loader.getController();
+        Main.chatRoomController.setDisplayName(userNameTextField.getText());
+        Main.chatRoomController.setMulticastIP(ipAddressTextField.getText());
+        Main.chatRoomController.setPortNumber(Integer.parseInt(portNumberTextField.getText()));
 
-        Stage secondStage = new Stage();
-        secondStage.setTitle("Wireless Ad Hoc Chat Room");
-        secondStage.setScene(new Scene(root));
-        secondStage.show();
+//        Stage secondStage = new Stage();
+//        secondStage.setTitle("Wireless Ad Hoc Chat Room");
+//        secondStage.setScene(new Scene(root));
+//        secondStage.show();
 
         Node source = (Node) event.getSource();
         Stage stage = (Stage) source.getScene().getWindow();
         stage.close();
 
-        chatRoomController.connect();
+        Main.chatRoomController.connect();
 
     }
 

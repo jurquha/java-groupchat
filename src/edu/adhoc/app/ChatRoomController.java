@@ -29,11 +29,12 @@ public class ChatRoomController {
 
     @FXML
     protected void handleOnActionEnterField(ActionEvent event) {
-        messageBox.getChildren().add(new Text(enterTextField.getText()));
+        String localMessage = displayName + ": " + enterTextField.getText();
+        messageBox.getChildren().add(new Text(localMessage));
         messageBoxScrollPane.vvalueProperty().bind(messageBox.heightProperty());
 
         try {
-            String message = getDisplayName() + ":" + enterTextField.getText();
+            String message = getDisplayName() + ": " + enterTextField.getText();
             byte[] buffer = message.getBytes();
             DatagramPacket datagram = new DatagramPacket(buffer, buffer.length, room, portNumber);
             System.out.println("sending datagram: " + datagram);

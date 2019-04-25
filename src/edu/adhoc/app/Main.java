@@ -24,18 +24,18 @@ public class Main extends Application {
 //        loginStage.setScene(new Scene(login));
 //        loginStage.show();
 
-//        FXMLLoader loader = new FXMLLoader(getClass().getResource("interface.fxml"));
-//        Parent room = loader.load();
-//        chatRoomController = (ChatRoomController) loader.getController();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("interface.fxml"));
+        Parent room = loader.load();
+        chatRoomController = (ChatRoomController) loader.getController();
 
         primaryStage.setTitle("Wireless Ad Hoc Chat Room Login");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
 
-//        Stage secondStage = new Stage();
-//        secondStage.setTitle("Wireless Ad Hoc Chat Room");
-//        secondStage.setScene(new Scene(room));
-//        secondStage.show();
+        Stage secondStage = new Stage();
+        secondStage.setTitle("Wireless Ad Hoc Chat Room");
+        secondStage.setScene(new Scene(room));
+        secondStage.show();
 
     }
 
