@@ -36,18 +36,19 @@ public class LoginController {
         ChatRoomController chatRoomController = loader.getController();
         chatRoomController.setDisplayName(userNameTextField.getText());
         chatRoomController.setMulticastIP(ipAddressTextField.getText());
-        chatRoomController.setPortNumber(portNumberTextField.getText());
+        chatRoomController.setPortNumber(Integer.parseInt(portNumberTextField.getText()));
 
         Stage secondStage = new Stage();
         secondStage.setTitle("Wireless Ad Hoc Chat Room");
         secondStage.setScene(new Scene(root));
         secondStage.show();
 
-        chatRoomController.connect();
-
         Node source = (Node) event.getSource();
         Stage stage = (Stage) source.getScene().getWindow();
         stage.close();
+
+        chatRoomController.connect();
+
     }
 
 

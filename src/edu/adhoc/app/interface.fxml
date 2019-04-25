@@ -27,7 +27,7 @@
         <VBox fx:id="userListVBox" maxHeight="200" maxWidth="200" />
     </ScrollPane>
     <Label text="Enter Message:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-    <TextField fx:id="enterTextField" onAction="#handleOnActionEnterField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+    <TextField fx:id="enterTextField" onAction="#" GridPane.columnIndex="1" GridPane.rowIndex="1" />
     <TextArea fx:id="enterTextArea" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
     <Button fx:id="submitMessageButton" onAction="#handleSubmitMessageButton" text="Submit" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
 </GridPane>

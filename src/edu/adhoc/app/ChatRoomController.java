@@ -23,7 +23,7 @@ public class ChatRoomController {
     @FXML private TextArea enterTextArea;
     private String displayName;
     private String multicastIP; //TODO chang this to InetAddress object later, this string is purely for testing UI
-    private String portNumber;
+    private int portNumber;
 
     @FXML
     protected void handleOnActionEnterField(ActionEvent event) {
@@ -39,10 +39,13 @@ public class ChatRoomController {
     protected void connect() {
         messageBox.getChildren().add(new Text(displayName));
         messageBox.getChildren().add(new Text(multicastIP));
-        messageBox.getChildren().add(new Text(portNumber));
+        messageBox.getChildren().add(new Text(Integer.toString(portNumber)));
+        System.out.println("This is where I connect");
+        //joinChat(getDisplayName(), getMulticastIP(), getPortNumber());
     }
 
-    public void joinChat(String displayName, String multicastHost, int portNumber) {
+    @FXML
+    private void joinChat(String displayName, String multicastHost, int portNumber) {
         /**
          * should this method be in here or in main?
          *if it is in here it can easily access UI events
@@ -50,32 +53,31 @@ public class ChatRoomController {
          */
 
         try {
+            System.out.println("trying to connect:");
             InetAddress room = InetAddress.getByName(multicastHost);
             MulticastSocket socket = new MulticastSocket(portNumber);
 
-            socket.setTimeToLive(0);
+            socket.setTimeToLive(1);
 
             socket.joinGroup(room);
             Thread thread = new Thread(new ReadThread(socket, room, portNumber, displayName));
+            System.out.println("about to start new thread");
             thread.start();
+            System.out.println("thread started");
 
-            while (true) {
-                enterTextField.setOnAction(e -> {
-                    try {
-                        String message = getDisplayName() + ":" + enterTextField.getText();
-                        byte[] buffer = message.getBytes();
-                        DatagramPacket datagram = new DatagramPacket(buffer, buffer.length, room, portNumber);
-                        socket.send(datagram);
-                    } catch (IOException ex) {
-                        Alert alert = new Alert(Alert.AlertType.ERROR, "Socket error.", ButtonType.CLOSE);
-                        alert.showAndWait();
-                        //ex.printStackTrace();
-                    }
+            enterTextField.setOnAction((ActionEvent e) -> {
+                try {
+                    String message = getDisplayName() + ":" + enterTextField.getText();
+                    byte[] buffer = message.getBytes();
+                    DatagramPacket datagram = new DatagramPacket(buffer, buffer.length, room, portNumber);
+                    socket.send(datagram);
+                } catch (IOException ex) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR, "Socket error.", ButtonType.CLOSE);
+                    alert.showAndWait();
+                    //ex.printStackTrace();
+                }
 
-                });
-
-
-            }
+            });
 
         } catch (SocketException ex) {
         } catch (UnknownHostException ex) {
@@ -95,7 +97,7 @@ public class ChatRoomController {
         return multicastIP;
     }
 
-    protected String getPortNumber() {
+    protected int getPortNumber() {
         return portNumber;
     }
 
@@ -107,7 +109,7 @@ public class ChatRoomController {
         this.multicastIP = multicastIP;
     }
 
-    protected void setPortNumber(String portNumber) {
+    protected void setPortNumber(int portNumber) {
         this.portNumber = portNumber;
     }
 

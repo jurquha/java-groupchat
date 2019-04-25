@@ -31,6 +31,7 @@ public class ReadThread implements Runnable {
                 socket.receive(datagram);
                 message = new String(buffer,0,datagram.getLength(),"UTF-8");
                 if(!message.startsWith(displayName)){
+                    System.out.println(message);
                     //figure out how to push this message to the vbox
                 }
             } catch(IOException e) {
