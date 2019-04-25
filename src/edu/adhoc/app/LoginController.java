@@ -30,7 +30,6 @@ public class LoginController {
             alert.showAndWait();
             return;
         }
-
         FXMLLoader loader = new FXMLLoader(getClass().getResource("interface.fxml"));
         Parent root = loader.load();
         ChatRoomController chatRoomController = loader.getController();

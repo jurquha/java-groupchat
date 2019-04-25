@@ -1,5 +1,8 @@
 package edu.adhoc.app;
 
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+
 import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
@@ -23,7 +26,9 @@ public class ReadThread implements Runnable {
 
     @Override
     public void run() {
+
         while(!exit) {
+            System.out.println("read thread started");
             byte[] buffer = new byte[ReadThread.MAX_LEN];
             DatagramPacket datagram = new DatagramPacket(buffer, buffer.length, group, port);
             String message;
@@ -32,6 +37,7 @@ public class ReadThread implements Runnable {
                 message = new String(buffer,0,datagram.getLength(),"UTF-8");
                 if(!message.startsWith(displayName)){
                     System.out.println(message);
+                    //Main.chatRoomController.enterMessage(message);
                     //figure out how to push this message to the vbox
                 }
             } catch(IOException e) {

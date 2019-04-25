@@ -24,11 +24,25 @@ public class ChatRoomController {
     private String displayName;
     private String multicastIP; //TODO chang this to InetAddress object later, this string is purely for testing UI
     private int portNumber;
+    private MulticastSocket socket;
+    private InetAddress room;
 
     @FXML
     protected void handleOnActionEnterField(ActionEvent event) {
         messageBox.getChildren().add(new Text(enterTextField.getText()));
         messageBoxScrollPane.vvalueProperty().bind(messageBox.heightProperty());
+
+        try {
+            String message = getDisplayName() + ":" + enterTextField.getText();
+            byte[] buffer = message.getBytes();
+            DatagramPacket datagram = new DatagramPacket(buffer, buffer.length, room, portNumber);
+            System.out.println("sending datagram: " + datagram);
+            socket.send(datagram);
+        } catch (IOException ex) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Socket error.", ButtonType.CLOSE);
+            alert.showAndWait();
+            //ex.printStackTrace();
+        }
     }
 
     @FXML
@@ -41,7 +55,7 @@ public class ChatRoomController {
         messageBox.getChildren().add(new Text(multicastIP));
         messageBox.getChildren().add(new Text(Integer.toString(portNumber)));
         System.out.println("This is where I connect");
-        //joinChat(getDisplayName(), getMulticastIP(), getPortNumber());
+        joinChat(getDisplayName(), getMulticastIP(), getPortNumber());
     }
 
     @FXML
@@ -54,35 +68,41 @@ public class ChatRoomController {
 
         try {
             System.out.println("trying to connect:");
-            InetAddress room = InetAddress.getByName(multicastHost);
-            MulticastSocket socket = new MulticastSocket(portNumber);
+            room = InetAddress.getByName(multicastHost);
+            socket = new MulticastSocket(portNumber);
 
             socket.setTimeToLive(1);
 
             socket.joinGroup(room);
+
+
             Thread thread = new Thread(new ReadThread(socket, room, portNumber, displayName));
             System.out.println("about to start new thread");
             thread.start();
             System.out.println("thread started");
 
-            enterTextField.setOnAction((ActionEvent e) -> {
-                try {
-                    String message = getDisplayName() + ":" + enterTextField.getText();
-                    byte[] buffer = message.getBytes();
-                    DatagramPacket datagram = new DatagramPacket(buffer, buffer.length, room, portNumber);
-                    socket.send(datagram);
-                } catch (IOException ex) {
-                    Alert alert = new Alert(Alert.AlertType.ERROR, "Socket error.", ButtonType.CLOSE);
-                    alert.showAndWait();
-                    //ex.printStackTrace();
-                }
-
-            });
+//            enterTextField.setOnAction((ActionEvent e) -> {
+//                try {
+//                    String message = getDisplayName() + ":" + enterTextField.getText();
+//                    byte[] buffer = message.getBytes();
+//                    DatagramPacket datagram = new DatagramPacket(buffer, buffer.length, room, portNumber);
+//                    socket.send(datagram);
+//                } catch (IOException ex) {
+//                    Alert alert = new Alert(Alert.AlertType.ERROR, "Socket error.", ButtonType.CLOSE);
+//                    alert.showAndWait();
+//                    //ex.printStackTrace();
+//                }
+//
+//            });
 
         } catch (SocketException ex) {
         } catch (UnknownHostException ex) {
         } catch (IOException ex) {
         }
+    }
+
+    protected void enterMessage(String message) {
+        messageBox.getChildren().add(new Text(message));
     }
 
     protected Text createMessage(){
