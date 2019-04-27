@@ -36,12 +36,17 @@ public class ReadThread implements Runnable {
             try {
                 socket.receive(datagram);
                 message = new String(buffer,0,datagram.getLength(),"UTF-8");
+                Message messageObj = new Message(buffer, datagram);
                 if(!message.startsWith(displayName)){
                     System.out.println(message);
                     Platform.runLater( () -> {
-                        String user = message.substring(0, message.indexOf(':'));
-                        Main.chatRoomController.addToUserList(user);
-                        Main.chatRoomController.enterMessage(message);
+//                        String user = message.substring(0, message.indexOf(':'));
+//                        Main.chatRoomController.addToUserList(user);
+//                        Main.chatRoomController.enterMessage(message);
+
+                        //Main.chatRoomController.addToUserList(messageObj.getMessageSender());
+                        Main.chatRoomController.enterMessage(messageObj);
+                        System.out.println("Message type: " + messageObj.getMessageType());
                     });
                     //figure out how to push this message to the vbox
                 }

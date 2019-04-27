@@ -2,14 +2,9 @@ package edu.adhoc.app;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.*;
@@ -26,7 +21,7 @@ public class ChatRoomController {
     private String multicastIP; //TODO chang this to InetAddress object later, this string is purely for testing UI
     private int portNumber;
     private MulticastSocket socket;
-    private InetAddress room;
+    private InetAddress group;
     private ArrayList<String> userList = new ArrayList<>();
 
     @FXML
@@ -37,12 +32,18 @@ public class ChatRoomController {
         messageBox.getChildren().add(new Text(localMessage));
         messageBoxScrollPane.vvalueProperty().bind(messageBox.heightProperty());
 
+        Message messageInstance = new Message(displayName, enterTextField.getText());
+        System.out.println(messageInstance);
+
         try {
             String message = getDisplayName() + ": " + enterTextField.getText();
             byte[] buffer = message.getBytes();
-            DatagramPacket datagram = new DatagramPacket(buffer, buffer.length, room, portNumber);
+            DatagramPacket datagram = new DatagramPacket(buffer, buffer.length, group, portNumber);
             System.out.println("sending datagram: " + datagram);
-            socket.send(datagram);
+            //socket.send(datagram);
+
+            DatagramPacket messageObjDatagram = messageInstance.getDatagram(group, portNumber);
+            socket.send(messageObjDatagram);
         } catch (IOException ex) {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Socket error.", ButtonType.CLOSE);
             alert.showAndWait();
@@ -73,17 +74,16 @@ public class ChatRoomController {
 
         try {
             System.out.println("trying to connect:");
-            room = InetAddress.getByName(multicastHost);
+            group = InetAddress.getByName(multicastHost);
             socket = new MulticastSocket(portNumber);
-
             socket.setTimeToLive(1);
+            socket.joinGroup(group);
 
-            socket.joinGroup(room);
-
-            Thread thread = new Thread(new ReadThread(socket, room, portNumber, displayName));
+            Thread thread = new Thread(new ReadThread(socket, group, portNumber, displayName));
             System.out.println("about to start new thread");
             thread.start();
             System.out.println("thread started");
+            sendJoinMessage();
 
         } catch (SocketException ex) {
         } catch (UnknownHostException ex) {
@@ -98,12 +98,46 @@ public class ChatRoomController {
         }
     }
 
-    protected void enterMessage(String message) {
-        messageBox.getChildren().add(new Text(message));
+    protected void enterMessage(Message receivedMessage) {
+        switch (receivedMessage.getMessageType()) {
+            case STANDARD:
+                if (!receivedMessage.getMessageSender().equals(displayName)){
+                    String displayMessage = receivedMessage.getMessageSender() + ": " + receivedMessage.getMessageData();
+                    messageBox.getChildren().add(new Text(displayMessage));
+                }
+                break;
+            case JOIN:
+                addToUserList(receivedMessage.getMessageSender());
+                sendJoinAckMessage();
+                break;
+            case JOIN_ACK:
+                addToUserList(receivedMessage.getMessageSender());
+                break;
+        }
     }
 
-    protected Text createMessage(){
-        return new Text("sample return to make intellij happy");
+    protected void sendJoinMessage(){
+        try{
+            Message joinMessage = new Message(MessageType.JOIN, displayName, "NONE");
+            DatagramPacket datagramPacket = joinMessage.getDatagram(group, portNumber);
+            socket.send(datagramPacket);
+        } catch (IOException ex){
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Socket error when sending JOIN message.", ButtonType.CLOSE);
+            alert.showAndWait();
+        }
+
+    }
+
+    protected void sendJoinAckMessage() {
+        try{
+            Message joinAckMessage = new Message(MessageType.JOIN_ACK, displayName, "NONE");
+            DatagramPacket datagramPacket = joinAckMessage.getDatagram(group, portNumber);
+            socket.send(datagramPacket);
+        } catch (IOException ex){
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Socket error when sending JOIN_ACK message.", ButtonType.CLOSE);
+            alert.showAndWait();
+        }
+
     }
 
     protected String getDisplayName() {
