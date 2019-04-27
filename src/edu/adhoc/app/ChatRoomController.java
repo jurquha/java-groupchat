@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.*;
+import java.util.ArrayList;
 
 public class ChatRoomController {
     @FXML private VBox messageBox;
@@ -26,10 +27,13 @@ public class ChatRoomController {
     private int portNumber;
     private MulticastSocket socket;
     private InetAddress room;
+    private ArrayList<String> userList = new ArrayList<>();
 
     @FXML
     protected void handleOnActionEnterField(ActionEvent event) {
         String localMessage = displayName + ": " + enterTextField.getText();
+        Text text = new Text(localMessage);
+
         messageBox.getChildren().add(new Text(localMessage));
         messageBoxScrollPane.vvalueProperty().bind(messageBox.heightProperty());
 
@@ -76,29 +80,21 @@ public class ChatRoomController {
 
             socket.joinGroup(room);
 
-
             Thread thread = new Thread(new ReadThread(socket, room, portNumber, displayName));
             System.out.println("about to start new thread");
             thread.start();
             System.out.println("thread started");
 
-//            enterTextField.setOnAction((ActionEvent e) -> {
-//                try {
-//                    String message = getDisplayName() + ":" + enterTextField.getText();
-//                    byte[] buffer = message.getBytes();
-//                    DatagramPacket datagram = new DatagramPacket(buffer, buffer.length, room, portNumber);
-//                    socket.send(datagram);
-//                } catch (IOException ex) {
-//                    Alert alert = new Alert(Alert.AlertType.ERROR, "Socket error.", ButtonType.CLOSE);
-//                    alert.showAndWait();
-//                    //ex.printStackTrace();
-//                }
-//
-//            });
-
         } catch (SocketException ex) {
         } catch (UnknownHostException ex) {
         } catch (IOException ex) {
+        }
+    }
+
+    protected void addToUserList(String user) {
+        if (!userList.contains(user)) {
+            userList.add(user);
+            userListVBox.getChildren().add(new Text(user));
         }
     }
 
