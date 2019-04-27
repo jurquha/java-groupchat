@@ -49,6 +49,7 @@ public class ChatRoomController {
             alert.showAndWait();
             //ex.printStackTrace();
         }
+        enterTextField.clear();
     }
 
     @FXML
