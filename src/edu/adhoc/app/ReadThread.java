@@ -39,6 +39,8 @@ public class ReadThread implements Runnable {
                 if(!message.startsWith(displayName)){
                     System.out.println(message);
                     Platform.runLater( () -> {
+                        String user = message.substring(0, message.indexOf(':'));
+                        Main.chatRoomController.addToUserList(user);
                         Main.chatRoomController.enterMessage(message);
                     });
                     //figure out how to push this message to the vbox
