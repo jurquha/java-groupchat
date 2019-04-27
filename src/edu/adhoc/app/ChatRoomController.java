@@ -26,6 +26,9 @@ public class ChatRoomController {
 
     @FXML
     protected void handleOnActionEnterField(ActionEvent event) {
+        if (enterTextField.getText().isEmpty()){
+            return;
+        }
         String localMessage = displayName + ": " + enterTextField.getText();
         Text text = new Text(localMessage);
 
