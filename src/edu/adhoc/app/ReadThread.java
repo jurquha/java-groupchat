@@ -40,18 +40,12 @@ public class ReadThread implements Runnable {
                 if(!message.startsWith(displayName)){
                     System.out.println(message);
                     Platform.runLater( () -> {
-//                        String user = message.substring(0, message.indexOf(':'));
-//                        Main.chatRoomController.addToUserList(user);
-//                        Main.chatRoomController.enterMessage(message);
-
-                        //Main.chatRoomController.addToUserList(messageObj.getMessageSender());
                         Main.chatRoomController.enterMessage(messageObj);
                         System.out.println("Message type: " + messageObj.getMessageType());
                     });
-                    //figure out how to push this message to the vbox
                 }
             } catch(IOException e) {
-                //fill empty exception
+                //TODO fill empty exception
             }
         }
     }

@@ -3,7 +3,6 @@ package edu.adhoc.app;
 import java.io.UnsupportedEncodingException;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
-import java.nio.charset.Charset;
 
 public class Message {
     private String messageSender;

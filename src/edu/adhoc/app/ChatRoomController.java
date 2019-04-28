@@ -1,5 +1,6 @@
 package edu.adhoc.app;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -14,9 +15,6 @@ import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
-import javax.swing.*;
-import javax.xml.crypto.Data;
-import java.awt.*;
 import java.io.IOException;
 import java.net.*;
 import java.util.ArrayList;
@@ -29,7 +27,7 @@ public class ChatRoomController {
     @FXML private Button submitMessageButton;
     @FXML private TextArea enterTextArea;
     private String displayName;
-    private String multicastIP; //TODO chang this to InetAddress object later, this string is purely for testing UI
+    private String multicastIP; //TODO chang this to InetAddress object later, if it seems better
     private int portNumber;
     private MulticastSocket socket;
     private InetAddress group;
@@ -74,6 +72,8 @@ public class ChatRoomController {
     @FXML
     protected void handleOnExit() {
         sendDisconnectMessage();
+        Platform.exit();
+        System.exit(0);
     }
 
     protected void connect() {
@@ -86,26 +86,20 @@ public class ChatRoomController {
 
     @FXML
     private void joinChat(String displayName, String multicastHost, int portNumber) {
-        /**
-         * should this method be in here or in main?
-         *if it is in here it can easily access UI events
-         * if it is in main getting notified on action events could prove to be tricky, but would likely be better
-         */
 
         try {
-            System.out.println("trying to connect:");
             group = InetAddress.getByName(multicastHost);
             socket = new MulticastSocket(portNumber);
             socket.setTimeToLive(1);
             socket.joinGroup(group);
 
             Thread thread = new Thread(new ReadThread(socket, group, portNumber, displayName));
-            System.out.println("about to start new thread");
             thread.start();
-            System.out.println("thread started");
             sendJoinMessage();
 
         } catch (SocketException ex) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Socket error when attempting to connect to multicast group.", ButtonType.CLOSE);
+            alert.showAndWait();
         } catch (UnknownHostException ex) {
         } catch (IOException ex) {
         }
@@ -130,11 +124,13 @@ public class ChatRoomController {
 
     protected void enterMessage(Message receivedMessage) {
         String displayMessage;
+        Text displayMessageText;
+        Font font = Font.font("SansSerif", FontWeight.BLACK, FontPosture.ITALIC, 12);
         switch (receivedMessage.getMessageType()) {
             case STANDARD:
                 if (!receivedMessage.getMessageSender().equals(displayName)){
                     displayMessage = receivedMessage.getMessageSender() + ": " + receivedMessage.getMessageData();
-                    Text displayMessageText = new Text(displayMessage);
+                    displayMessageText = new Text(displayMessage);
                     messageBox.getChildren().add(displayMessageText);
                 }
                 break;
@@ -143,23 +139,30 @@ public class ChatRoomController {
                     addToUserList(receivedMessage.getMessageSender());
                     sendJoinAckMessage();
                     displayMessage = receivedMessage.getMessageSender() + " has joined the chat!";
-                    messageBox.getChildren().add(new Text(displayMessage));
+                    displayMessageText = new Text(displayMessage);
+                    displayMessageText.setFont(font);
+                    messageBox.getChildren().add(displayMessageText);
                 }
                 else{
                     displayMessage = "You have joined the chat!";
-                    messageBox.getChildren().add(new Text(displayMessage));
+                    displayMessageText = new Text(displayMessage);
+                    displayMessageText.setFont(font);
+                    messageBox.getChildren().add(displayMessageText);
                 }
                 break;
             case JOIN_ACK:
                 addToUserList(receivedMessage.getMessageSender());
                 break;
             case DISCONNECT:
-                System.out.println("received disconnect");
                 removeFromUserList(receivedMessage.getMessageSender());
                 displayMessage = receivedMessage.getMessageSender() + " " + "has left the chat!";
-                messageBox.getChildren().add(new Text(displayMessage));
+                displayMessageText = new Text(displayMessage);
+                displayMessageText.setFont(font);
+                messageBox.getChildren().add(displayMessageText);
                 break;
         }
+        messageBoxScrollPane.vvalueProperty().bind(messageBox.heightProperty());
+
     }
 
     protected void sendJoinMessage(){
@@ -220,17 +223,4 @@ public class ChatRoomController {
     protected void setPortNumber(int portNumber) {
         this.portNumber = portNumber;
     }
-
-//    @FXML
-//    protected void handleConnectButtonOnAction(ActionEvent event) throws Exception {
-//        Parent root = FXMLLoader.load(getClass().getResource("interface.fxml"));
-//        Stage secondStage = new Stage();
-//        secondStage.setTitle("Wireless Ad Hoc Chat Room");
-//        secondStage.setScene(new Scene(root));
-//        secondStage.show();
-//
-//        Node source = (Node) event.getSource();
-//        Stage stage = (Stage) source.getScene().getWindow();
-//        stage.close();
-//    }
 }
