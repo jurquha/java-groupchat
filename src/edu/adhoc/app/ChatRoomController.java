@@ -2,10 +2,21 @@ package edu.adhoc.app;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
+import javax.swing.*;
+import javax.xml.crypto.Data;
+import java.awt.*;
 import java.io.IOException;
 import java.net.*;
 import java.util.ArrayList;
@@ -60,6 +71,11 @@ public class ChatRoomController {
         messageBox.getChildren().add(new Text(enterTextArea.getText()));
     }
 
+    @FXML
+    protected void handleOnExit() {
+        sendDisconnectMessage();
+    }
+
     protected void connect() {
         messageBox.getChildren().add(new Text(displayName));
         messageBox.getChildren().add(new Text(multicastIP));
@@ -102,20 +118,46 @@ public class ChatRoomController {
         }
     }
 
+    protected void removeFromUserList(String userString) {
+        for (Node user : userListVBox.getChildren()) {
+            Text tempUserText = (Text) user;
+            if (tempUserText.getText().equals(userString)) {
+                userListVBox.getChildren().remove(user);
+                return;
+            }
+        }
+    }
+
     protected void enterMessage(Message receivedMessage) {
+        String displayMessage;
         switch (receivedMessage.getMessageType()) {
             case STANDARD:
                 if (!receivedMessage.getMessageSender().equals(displayName)){
-                    String displayMessage = receivedMessage.getMessageSender() + ": " + receivedMessage.getMessageData();
-                    messageBox.getChildren().add(new Text(displayMessage));
+                    displayMessage = receivedMessage.getMessageSender() + ": " + receivedMessage.getMessageData();
+                    Text displayMessageText = new Text(displayMessage);
+                    messageBox.getChildren().add(displayMessageText);
                 }
                 break;
             case JOIN:
-                addToUserList(receivedMessage.getMessageSender());
-                sendJoinAckMessage();
+                if (!receivedMessage.getMessageSender().equals(displayName)) {
+                    addToUserList(receivedMessage.getMessageSender());
+                    sendJoinAckMessage();
+                    displayMessage = receivedMessage.getMessageSender() + " has joined the chat!";
+                    messageBox.getChildren().add(new Text(displayMessage));
+                }
+                else{
+                    displayMessage = "You have joined the chat!";
+                    messageBox.getChildren().add(new Text(displayMessage));
+                }
                 break;
             case JOIN_ACK:
                 addToUserList(receivedMessage.getMessageSender());
+                break;
+            case DISCONNECT:
+                System.out.println("received disconnect");
+                removeFromUserList(receivedMessage.getMessageSender());
+                displayMessage = receivedMessage.getMessageSender() + " " + "has left the chat!";
+                messageBox.getChildren().add(new Text(displayMessage));
                 break;
         }
     }
@@ -142,6 +184,17 @@ public class ChatRoomController {
             alert.showAndWait();
         }
 
+    }
+
+    protected void sendDisconnectMessage() {
+        try {
+            Message disconnectMessage = new Message(MessageType.DISCONNECT, displayName, "NONE");
+            DatagramPacket datagramPacket = disconnectMessage.getDatagram(group, portNumber);
+            socket.send(datagramPacket);
+        } catch (IOException ex) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Socket error when sending JOIN_ACK message.", ButtonType.CLOSE);
+            alert.showAndWait();
+        }
     }
 
     protected String getDisplayName() {

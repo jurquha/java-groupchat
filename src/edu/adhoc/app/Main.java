@@ -28,6 +28,7 @@ public class Main extends Application {
         primaryStage = new Stage();
         primaryStage.setTitle("Wireless Ad Hoc Chat Room");
         primaryStage.setScene(new Scene(room));
+        primaryStage.setOnCloseRequest(event -> chatRoomController.handleOnExit());
     }
 
     private static void setPrimaryStage(Stage stage) {
