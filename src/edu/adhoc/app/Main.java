@@ -12,31 +12,30 @@ import java.net.*;
 public class Main extends Application {
 
     static ChatRoomController chatRoomController;
+    private static Stage primaryStage;
 
     @Override
-    public void start(Stage primaryStage) throws Exception{
+    public void start(Stage loginStage) throws Exception{
 
         Parent root = FXMLLoader.load(getClass().getResource("login.fxml"));
-        //Parent room = FXMLLoader.load(getClass().getResource("login.fxml"));
-
-//        Stage loginStage = new Stage();
-//        loginStage.setTitle("Connect to Chatroom");
-//        loginStage.setScene(new Scene(login));
-//        loginStage.show();
+        loginStage.setTitle("Wireless Ad Hoc Chat Room Login");
+        loginStage.setScene(new Scene(root));
+        loginStage.show();
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("interface.fxml"));
         Parent room = loader.load();
         chatRoomController = (ChatRoomController) loader.getController();
+        primaryStage = new Stage();
+        primaryStage.setTitle("Wireless Ad Hoc Chat Room");
+        primaryStage.setScene(new Scene(room));
+    }
 
-        primaryStage.setTitle("Wireless Ad Hoc Chat Room Login");
-        primaryStage.setScene(new Scene(root));
-        primaryStage.show();
+    private static void setPrimaryStage(Stage stage) {
+        primaryStage = stage;
+    }
 
-        Stage secondStage = new Stage();
-        secondStage.setTitle("Wireless Ad Hoc Chat Room");
-        secondStage.setScene(new Scene(room));
-        secondStage.show();
-
+    protected static Stage getPrimaryStage() {
+        return primaryStage;
     }
 
     public static void main(String[] args) {

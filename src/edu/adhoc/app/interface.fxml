@@ -29,9 +29,10 @@
     <ScrollPane GridPane.columnIndex="0" GridPane.rowIndex="1">
         <VBox fx:id="userListVBox" maxHeight="200" maxWidth="200" />
     </ScrollPane>
-    <Label text="Enter Message:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+    <Label text="Enter Message:" GridPane.columnIndex="0" GridPane.rowIndex="2" GridPane.halignment="CENTER"/>
     <TextField fx:id="enterTextField" onAction="#handleOnActionEnterField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-    <TextArea fx:id="enterTextArea" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-    <Button fx:id="submitMessageButton" onAction="#handleSubmitMessageButton" text="Submit" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+    <!--<TextArea fx:id="enterTextArea" GridPane.columnIndex="1" GridPane.rowIndex="3" />-->
+    <!--<Button fx:id="submitMessageButton" onAction="#handleSubmitMessageButton" text="Submit" GridPane.columnIndex="0" GridPane.rowIndex="3" />-->
     <Label text="Connected Users" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.halignment="CENTER"/>
+    <Label text="Text Channel" GridPane.columnIndex="1" GridPane.rowIndex="0" GridPane.halignment="CENTER"/>
 </GridPane>

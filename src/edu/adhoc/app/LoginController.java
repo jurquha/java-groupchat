@@ -34,6 +34,7 @@ public class LoginController {
         Main.chatRoomController.setMulticastIP(ipAddressTextField.getText());
         Main.chatRoomController.setPortNumber(Integer.parseInt(portNumberTextField.getText()));
         Main.chatRoomController.addToUserList(userNameTextField.getText());
+        Main.getPrimaryStage().show();
 
         Node source = (Node) event.getSource();
         Stage stage = (Stage) source.getScene().getWindow();
