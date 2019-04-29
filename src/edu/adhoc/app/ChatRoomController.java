@@ -43,7 +43,6 @@ public class ChatRoomController {
         Text localMessageText = new Text(message.getMessageSender() + ": " + message.getMessageData());
         messageBox.getChildren().add(localMessageText);
         messageBoxScrollPane.vvalueProperty().bind(messageBox.heightProperty());
-        System.out.println(message);
 
         try {
             DatagramPacket messageObjDatagram = message.getDatagram(group, portNumber);
@@ -71,7 +70,6 @@ public class ChatRoomController {
         messageBox.getChildren().add(new Text(displayName));
         messageBox.getChildren().add(new Text(multicastIP));
         messageBox.getChildren().add(new Text(Integer.toString(portNumber)));
-        System.out.println("This is where I connect");
         joinChat(getDisplayName(), getMulticastIP(), getPortNumber());
     }
 
@@ -84,7 +82,7 @@ public class ChatRoomController {
             socket.setTimeToLive(1);
             socket.joinGroup(group);
 
-            Thread thread = new Thread(new ReadThread(socket, group, portNumber, displayName));
+            Thread thread = new Thread(new ReadThread(socket, group, portNumber));
             thread.start();
             sendJoinMessage();
 
@@ -92,7 +90,11 @@ public class ChatRoomController {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Socket error when attempting to connect to multicast group.", ButtonType.CLOSE);
             alert.showAndWait();
         } catch (UnknownHostException ex) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Unexpected error in ChatRoomController, host is not a valid host.", ButtonType.CLOSE);
+            alert.showAndWait();
         } catch (IOException ex) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "IOException when attempting to connect to multicast group.", ButtonType.CLOSE);
+            alert.showAndWait();
         }
     }
 

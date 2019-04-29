@@ -39,17 +39,17 @@ public class LoginController {
             alert.showAndWait();
             return;
         }
-        Main.getChatRoomController().setDisplayName(userNameTextField.getText());
-        Main.getChatRoomController().setMulticastIP(ipAddressTextField.getText());
-        Main.getChatRoomController().setPortNumber(Integer.parseInt(portNumberTextField.getText()));
-        Main.getChatRoomController().addToUserList(userNameTextField.getText());
-        Main.getPrimaryStage().show();
+        GroupChat.getChatRoomController().setDisplayName(userNameTextField.getText());
+        GroupChat.getChatRoomController().setMulticastIP(ipAddressTextField.getText());
+        GroupChat.getChatRoomController().setPortNumber(Integer.parseInt(portNumberTextField.getText()));
+        GroupChat.getChatRoomController().addToUserList(userNameTextField.getText());
+        GroupChat.getPrimaryStage().show();
 
         Node source = (Node) event.getSource();
         Stage stage = (Stage) source.getScene().getWindow();
         stage.close();
 
-        Main.getChatRoomController().connect();
+        GroupChat.getChatRoomController().connect();
 
     }
 
