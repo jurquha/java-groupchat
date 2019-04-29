@@ -38,28 +38,19 @@ public class ChatRoomController {
         if (enterTextField.getText().isEmpty()){
             return;
         }
-        String localMessage = displayName + ": " + enterTextField.getText();
-        Text text = new Text(localMessage);
 
-        messageBox.getChildren().add(new Text(localMessage));
+        Message message = new Message(displayName, enterTextField.getText());
+        Text localMessageText = new Text(message.getMessageSender() + ": " + message.getMessageData());
+        messageBox.getChildren().add(localMessageText);
         messageBoxScrollPane.vvalueProperty().bind(messageBox.heightProperty());
-
-        Message messageInstance = new Message(displayName, enterTextField.getText());
-        System.out.println(messageInstance);
+        System.out.println(message);
 
         try {
-            String message = getDisplayName() + ": " + enterTextField.getText();
-            byte[] buffer = message.getBytes();
-            DatagramPacket datagram = new DatagramPacket(buffer, buffer.length, group, portNumber);
-            System.out.println("sending datagram: " + datagram);
-            //socket.send(datagram);
-
-            DatagramPacket messageObjDatagram = messageInstance.getDatagram(group, portNumber);
+            DatagramPacket messageObjDatagram = message.getDatagram(group, portNumber);
             socket.send(messageObjDatagram);
         } catch (IOException ex) {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Socket error.", ButtonType.CLOSE);
             alert.showAndWait();
-            //ex.printStackTrace();
         }
         enterTextField.clear();
     }

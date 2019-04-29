@@ -32,18 +32,13 @@ public class ReadThread implements Runnable {
             System.out.println("read thread started");
             byte[] buffer = new byte[ReadThread.MAX_LEN];
             DatagramPacket datagram = new DatagramPacket(buffer, buffer.length, group, port);
-            String message;
             try {
                 socket.receive(datagram);
-                message = new String(buffer,0,datagram.getLength(),"UTF-8");
-                Message messageObj = new Message(buffer, datagram);
-                if(!message.startsWith(displayName)){
-                    System.out.println(message);
-                    Platform.runLater( () -> {
-                        Main.chatRoomController.enterMessage(messageObj);
-                        System.out.println("Message type: " + messageObj.getMessageType());
-                    });
-                }
+                Message message = new Message(buffer, datagram);
+                Platform.runLater( () -> {
+                    Main.chatRoomController.enterMessage(message);
+                    System.out.println("Message type: " + message.getMessageType());
+                });
             } catch(IOException e) {
                 //TODO fill empty exception
             }
