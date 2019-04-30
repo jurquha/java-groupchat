@@ -1,4 +1,4 @@
-package edu.adhoc.app;
+package edu.groupchat.app;
 
 public enum MessageType {
     JOIN,

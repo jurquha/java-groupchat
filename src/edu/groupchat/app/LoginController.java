@@ -1,4 +1,4 @@
-package edu.adhoc.app;
+package edu.groupchat.app;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

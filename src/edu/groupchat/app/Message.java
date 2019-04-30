@@ -1,4 +1,4 @@
-package edu.adhoc.app;
+package edu.groupchat.app;
 
 import java.io.UnsupportedEncodingException;
 import java.net.DatagramPacket;
@@ -22,6 +22,10 @@ public class Message {
     }
 
     protected Message(byte[] buffer, DatagramPacket datagramPacket) {
+        /*
+         * Create a Message object from a byte array and datagram, this is used by the ReadThread when messages
+         * are received.
+         */
         try {
             String rawMessage = new String(buffer, 0, datagramPacket.getLength(), "UTF-8");
             String[] messageArray = rawMessage.split(";");

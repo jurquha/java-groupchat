@@ -1,4 +1,4 @@
-package edu.adhoc.app;
+package edu.groupchat.app;
 
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
@@ -25,7 +25,12 @@ public class ReadThread implements Runnable {
 
     @Override
     public void run() {
-
+        /*
+         * Run constantly until exit is set to true (currently exit will never be set to true,
+         * but this is left in for future applications). This constantly listens to the specified
+         * multicast group and port for new datagrams, and uses those received messages to
+         * create a new Message object, which is sent to the ChatRoomController
+         */
         while(!exit) {
             byte[] buffer = new byte[ReadThread.MAX_LEN];
             DatagramPacket datagram = new DatagramPacket(buffer, buffer.length, group, port);
