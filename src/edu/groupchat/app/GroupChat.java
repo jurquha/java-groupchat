@@ -18,7 +18,7 @@ public class GroupChat extends Application {
 
         //declare and load both stages, show the login screen, set the application close handler
         Parent root = FXMLLoader.load(getClass().getResource("login.fxml"));
-        loginStage.setTitle("Wireless Ad Hoc Chat Room Login");
+        loginStage.setTitle("Group Chat Login");
         loginStage.setScene(new Scene(root));
         loginStage.show();
 
@@ -26,7 +26,7 @@ public class GroupChat extends Application {
         Parent room = loader.load();
         chatRoomController = (ChatRoomController) loader.getController();
         primaryStage = new Stage();
-        primaryStage.setTitle("Wireless Ad Hoc Chat Room");
+        primaryStage.setTitle("Group Chat");
         primaryStage.setScene(new Scene(room));
         primaryStage.setOnCloseRequest(event -> chatRoomController.handleOnExit());
     }

@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/ad-hoc-interface.iml" filepath="$PROJECT_DIR$/ad-hoc-interface.iml" />
+      <module fileurl="file://$PROJECT_DIR$/java-groupchat.iml" filepath="$PROJECT_DIR$/java-groupchat.iml" />
     </modules>
   </component>
 </project>
