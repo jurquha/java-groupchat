@@ -1,3 +1,7 @@
+/*
+Developed by Jonah Urquhart
+ */
+
 package edu.groupchat.app;
 
 import javafx.event.ActionEvent;

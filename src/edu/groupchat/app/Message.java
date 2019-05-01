@@ -1,3 +1,7 @@
+/*
+Developed by Jonah Urquhart
+ */
+
 package edu.groupchat.app;
 
 import java.io.UnsupportedEncodingException;
