@@ -67,9 +67,9 @@ public class ChatRoomController {
     }
 
     protected void connect() {
-        messageBox.getChildren().add(new Text(displayName));
-        messageBox.getChildren().add(new Text(multicastIP));
-        messageBox.getChildren().add(new Text(Integer.toString(portNumber)));
+        messageBox.getChildren().add(new Text("Connected as: " + displayName));
+        messageBox.getChildren().add(new Text("Joined group: " + multicastIP));
+        messageBox.getChildren().add(new Text("Socket port: " + Integer.toString(portNumber)));
         joinChat(getDisplayName(), getMulticastIP(), getPortNumber());
     }
 
