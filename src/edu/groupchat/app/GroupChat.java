@@ -2,6 +2,14 @@
  Developed by Jonah Urquhart
  */
 
+/*
+    TODO: Have program either launch in multicast mode, or launch in standard client/server mode
+    In the second option, the application will launch as a client, a separate headless server
+    instance will be launched to connect to. All clients will connect to this server
+
+    TODO: investigate if Java 11 should be used instead, and the changes involved there
+ */
+
 package edu.groupchat.app;
 
 import javafx.application.Application;
