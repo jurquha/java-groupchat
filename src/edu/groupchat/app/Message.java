@@ -27,7 +27,7 @@ public class Message {
 
     protected Message(byte[] buffer, DatagramPacket datagramPacket) {
         /*
-         * Create a Message object from a byte array and datagram, this is used by the ReadThread when messages
+         * Create a Message object from a byte array and datagram, this is used by the MulticastReadThread when messages
          * are received.
          */
         try {

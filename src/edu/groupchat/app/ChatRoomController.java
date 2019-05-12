@@ -96,7 +96,7 @@ public class ChatRoomController {
             socket.setTimeToLive(1);
             socket.joinGroup(group);
 
-            Thread thread = new Thread(new ReadThread(socket, group, portNumber));
+            Thread thread = new Thread(new MulticastReadThread(socket, group, portNumber));
             thread.start();
             sendJoinMessage();
 

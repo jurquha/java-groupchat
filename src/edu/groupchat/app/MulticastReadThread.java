@@ -13,7 +13,7 @@ import java.net.InetAddress;
 import java.net.MulticastSocket;
 import java.io.IOException;
 
-public class ReadThread implements Runnable {
+public class MulticastReadThread implements Runnable {
 
     private MulticastSocket socket;
     private InetAddress group;
@@ -21,7 +21,7 @@ public class ReadThread implements Runnable {
     private boolean exit = false;
     private static final int MAX_LEN = 1000;
 
-    ReadThread(MulticastSocket socket, InetAddress group, int portNumber) {
+    MulticastReadThread(MulticastSocket socket, InetAddress group, int portNumber) {
         this.socket = socket;
         this.group = group;
         this.port = portNumber;
@@ -36,7 +36,7 @@ public class ReadThread implements Runnable {
          * create a new Message object, which is sent to the ChatRoomController
          */
         while(!exit) {
-            byte[] buffer = new byte[ReadThread.MAX_LEN];
+            byte[] buffer = new byte[MulticastReadThread.MAX_LEN];
             DatagramPacket datagram = new DatagramPacket(buffer, buffer.length, group, port);
             try {
                 socket.receive(datagram);
@@ -46,8 +46,8 @@ public class ReadThread implements Runnable {
                 });
             } catch(IOException e) {
                 Platform.runLater(() -> {
-                    System.out.println("Unexpected IOException in ReadThread");
-                    Alert alert = new Alert(Alert.AlertType.ERROR, "Unexpected IOException in ReadThread.", ButtonType.CLOSE);
+                    System.out.println("Unexpected IOException in MulticastReadThread");
+                    Alert alert = new Alert(Alert.AlertType.ERROR, "Unexpected IOException in MulticastReadThread.", ButtonType.CLOSE);
                     alert.showAndWait();
                 });
             }
