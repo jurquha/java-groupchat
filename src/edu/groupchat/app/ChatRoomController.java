@@ -4,6 +4,8 @@ Developed by Jonah Urquhart
 
 package edu.groupchat.app;
 
+import edu.groupchat.message.Message;
+import edu.groupchat.message.MessageType;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

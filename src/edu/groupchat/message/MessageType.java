@@ -2,7 +2,7 @@
 Developed by Jonah Urquhart
  */
 
-package edu.groupchat.app;
+package edu.groupchat.message;
 
 public enum MessageType {
     JOIN,

@@ -4,6 +4,7 @@ Developed by Jonah Urquhart
 
 package edu.groupchat.app;
 
+import edu.groupchat.message.Message;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;

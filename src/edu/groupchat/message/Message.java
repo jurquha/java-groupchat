@@ -2,7 +2,7 @@
 Developed by Jonah Urquhart
  */
 
-package edu.groupchat.app;
+package edu.groupchat.message;
 
 import java.io.UnsupportedEncodingException;
 import java.net.DatagramPacket;
@@ -13,19 +13,19 @@ public class Message {
     private String messageData;
     private MessageType messageType;
 
-    protected Message(MessageType messageType, String messageSender, String messageData) {
+    public Message(MessageType messageType, String messageSender, String messageData) {
         this.messageData = messageData;
         this.messageType = messageType;
         this.messageSender = messageSender;
     }
 
-    protected Message(String messageSender, String messageData) {
+    public Message(String messageSender, String messageData) {
         this.messageType = MessageType.STANDARD;
         this.messageData = messageData;
         this.messageSender = messageSender;
     }
 
-    protected Message(byte[] buffer, DatagramPacket datagramPacket) {
+    public Message(byte[] buffer, DatagramPacket datagramPacket) {
         /*
          * Create a Message object from a byte array and datagram, this is used by the MulticastReadThread when messages
          * are received.
