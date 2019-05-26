@@ -47,8 +47,8 @@ public class ChatRoomController {
 
         Message message = new Message(displayName, enterTextField.getText());
         Text localMessageText = new Text(message.getMessageSender() + ": " + message.getMessageData());
-        messageBox.getChildren().add(localMessageText);
-        messageBoxScrollPane.vvalueProperty().bind(messageBox.heightProperty());
+        //messageBox.getChildren().add(localMessageText);
+        //messageBoxScrollPane.vvalueProperty().bind(messageBox.heightProperty());
 
         try {
             DatagramPacket messageObjDatagram = message.getDatagram(group, portNumber);
@@ -137,11 +137,14 @@ public class ChatRoomController {
         Font font = Font.font("SansSerif", FontWeight.BLACK, FontPosture.ITALIC, 12);
         switch (receivedMessage.getMessageType()) {
             case STANDARD:
-                if (!receivedMessage.getMessageSender().equals(displayName)){
-                    displayMessage = receivedMessage.getMessageSender() + ": " + receivedMessage.getMessageData();
-                    displayMessageText = new Text(displayMessage);
-                    messageBox.getChildren().add(displayMessageText);
-                }
+//                if (!receivedMessage.getMessageSender().equals(displayName)){
+//                    displayMessage = receivedMessage.getMessageSender() + ": " + receivedMessage.getMessageData();
+//                    displayMessageText = new Text(displayMessage);
+//                    messageBox.getChildren().add(displayMessageText);
+//                }
+                displayMessage = receivedMessage.getMessageSender() + ": " + receivedMessage.getMessageData();
+                displayMessageText = new Text(displayMessage);
+                messageBox.getChildren().add(displayMessageText);
                 break;
             case JOIN:
                 if (!receivedMessage.getMessageSender().equals(displayName)) {
