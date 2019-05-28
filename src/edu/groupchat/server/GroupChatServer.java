@@ -1,7 +1,19 @@
 package edu.groupchat.server;
 
+import java.util.ArrayList;
+
 public class GroupChatServer {
+
+    private ArrayList<String> clientList; //TODO: make client class and make arrayList list of type client
+
     public static void main(String[] args) {
+
+        //initialize client list
+        // does it make sense to create a client class that holds all info about client?
+        
+        // launch separate thread to constantly accept new clients, up to upper limit (10?)
+        //
+
 
     }
 
@@ -16,5 +28,18 @@ public class GroupChatServer {
          */
 
     }
+
+    private void updateClientList() {
+
+    }
+
+    private void addClient() {
+
+    }
+
+    private void removeClient() {
+
+    }
+
 
 }
