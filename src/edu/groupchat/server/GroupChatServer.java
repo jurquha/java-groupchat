@@ -10,7 +10,7 @@ public class GroupChatServer {
 
         //initialize client list
         // does it make sense to create a client class that holds all info about client?
-        
+
         // launch separate thread to constantly accept new clients, up to upper limit (10?)
         //
 
